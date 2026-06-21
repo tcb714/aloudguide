@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AloudGuide Privacy Policy</title>
+  <meta name="description" content="Privacy policy for the AloudGuide browser extension — what it collects, how data is used, and what stays on your device." />
+  <meta name="robots" content="index, follow" />
+  <style>
+    :root {
+      --brand: #2563eb;
+      --ink: #172033;
+      --muted: #4b5563;
+      --line: #e5e9f0;
+      --bg: #f7f9fc;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 32px 20px 72px; }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 20px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .logo {
+      width: 40px; height: 40px;
+      flex: none;
+      display: inline-grid; place-items: center;
+      background: var(--brand);
+      border-radius: 10px;
+      color: #fff;
+    }
+    .logo svg { width: 22px; height: 22px; display: block; }
+    .brand { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; }
+    h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.02em; }
+    .updated { color: var(--muted); font-size: 15px; margin: 0 0 28px; }
+    .lede { font-size: 19px; color: var(--ink); margin: 0 0 32px; }
+    h2 {
+      font-size: 20px;
+      margin: 36px 0 10px;
+      padding-top: 4px;
+    }
+    p { margin: 0 0 14px; }
+    ul { margin: 0 0 16px; padding-left: 22px; }
+    li { margin: 6px 0; }
+    a { color: var(--brand); }
+    strong { font-weight: 700; }
+    .contact {
+      margin-top: 40px;
+      padding: 18px 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .contact a { font-weight: 600; }
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <a class="brand" href="./" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/>
+            <path d="M16.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M19 6a8 8 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        AloudGuide
+      </a>
+    </header>
+
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: June 21, 2026</p>
+
+    <p class="lede">AloudGuide is a browser extension that reads a short, plain-English explanation of the web page you are viewing when you ask it to.</p>
+
+    <h2>What AloudGuide Collects</h2>
+    <p>When you click the AloudGuide button, the extension creates a small page descriptor. It can include:</p>
+    <ul>
+      <li>The site's title, hostname, and public page description.</li>
+      <li>Headings and the labels of prominent buttons.</li>
+      <li>Form field labels and whether each field is empty or filled.</li>
+      <li>Page state signals, such as cart count, visible error messages, or whether a confirmation message appears.</li>
+      <li>A local safety verdict about whether the web address looks suspicious.</li>
+    </ul>
+    <p>AloudGuide does not collect raw HTML. AloudGuide does not collect typed form values, passwords, payment card numbers, or other field contents. The extension may look at a field value only long enough to decide whether the field is empty or filled, then discards the value.</p>
+
+    <h2>How The Data Is Used</h2>
+    <p>When you ask AloudGuide to read a page, the page descriptor is sent over an encrypted (HTTPS) connection to the AloudGuide backend service. The backend forwards the descriptor to Anthropic's Claude API, which generates the spoken gist and optional extra detail and returns them to you. Anthropic processes the descriptor only to produce that response.</p>
+    <p>The backend does not write page descriptors, their contents, or the model's replies to its logs. It keeps only minimal operational records (such as the time of a request, the response status, and a coarse request counter used to prevent abuse), which do not include the page content.</p>
+    <p>If the backend is unavailable or your daily quota is reached, AloudGuide uses an offline template summary generated inside the extension instead, with no network request.</p>
+
+    <h2>What Is Stored</h2>
+    <p>AloudGuide stores extension settings, such as whether the button is shown, button size, and premium/subscription state, using Chrome extension storage. For paid users it also stores a Premium license token, which the extension sends to the AloudGuide backend so the backend can confirm the subscription. The token does not contain personal browsing data.</p>
+    <p>AloudGuide also keeps a short-lived session cache of recent page explanations so clicking again on an unchanged page can replay the answer without another model request. The cache is cleared by the browser session and is not intended as a history log.</p>
+
+    <h2>What Is Shared</h2>
+    <p>AloudGuide shares page descriptors with Anthropic (as a processor that runs the Claude model) only when you ask AloudGuide to read a page. Anthropic acts on the descriptor solely to return the explanation. AloudGuide does not sell personal data and does not use it for advertising.</p>
+    <p>Scam warnings stay on your own device. When a page looks suspicious, AloudGuide includes a spoken caution in the explanation it reads aloud to you. It does not email, text, or send that warning to anyone, and there is no remote alert channel.</p>
+
+    <h2>Your Choices</h2>
+    <p>You can hide the AloudGuide button from the popup. You can also remove the extension from Chrome at any time.</p>
+
+    <div class="contact">
+      <h2 style="margin-top:0">Contact</h2>
+      <p style="margin-bottom:0">For privacy questions, contact us at <a href="mailto:aloudguide@gmail.com">aloudguide@gmail.com</a>. This policy may be updated as features change; the "Last updated" date above reflects the current version.</p>
+    </div>
+
+    <footer>
+      &copy; 2026 AloudGuide. This page is the official privacy policy for the AloudGuide browser extension.
+    </footer>
+  </main>
+</body>
+</html>

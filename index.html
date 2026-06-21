@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AloudGuide — web pages, read aloud in plain English</title>
+  <meta name="description" content="AloudGuide is a browser extension that reads any web page aloud in plain English and warns about likely scams. Built for older and less tech-savvy users." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="AloudGuide — web pages, read aloud in plain English" />
+  <meta property="og:description" content="A browser extension that reads any web page aloud in plain English and warns about likely scams." />
+  <meta property="og:type" content="website" />
+  <style>
+    :root {
+      --brand: #2563eb;
+      --brand-dark: #1d4ed8;
+      --ink: #111827;
+      --body: #374151;
+      --muted: #6b7280;
+      --line: #e5e9f0;
+      --bg: #ffffff;
+      --soft: #f5f8ff;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--body);
+      font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brand); }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: saturate(180%) blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; color: var(--ink); text-decoration: none; }
+    .logo { width: 34px; height: 34px; flex: none; display: inline-grid; place-items: center; background: var(--brand); border-radius: 9px; color: #fff; }
+    .logo svg { width: 19px; height: 19px; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { color: var(--body); text-decoration: none; font-size: 15px; font-weight: 500; }
+    .nav-links a:hover { color: var(--ink); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 20px; border-radius: 10px; font-weight: 700; font-size: 15px;
+      text-decoration: none; border: 1px solid transparent; cursor: pointer;
+    }
+    .btn-primary { background: var(--brand); color: #fff; }
+    .btn-primary:hover { background: var(--brand-dark); }
+    .btn-ghost { background: #fff; color: var(--brand); border-color: var(--line); }
+    .btn-ghost:hover { background: var(--soft); }
+    @media (max-width: 640px) { .nav-links a:not(.btn) { display: none; } }
+
+    /* Hero */
+    .hero { padding: 72px 0 56px; text-align: center; background: linear-gradient(#ffffff, var(--soft)); }
+    .hero h1 { font-size: 46px; line-height: 1.08; letter-spacing: -0.025em; color: var(--ink); margin: 0 auto 18px; max-width: 760px; }
+    .hero p.sub { font-size: 20px; color: var(--body); max-width: 620px; margin: 0 auto 30px; }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .hero .btn { padding: 14px 26px; font-size: 16px; }
+    .hero .note { margin-top: 16px; color: var(--muted); font-size: 14px; }
+    @media (max-width: 640px) { .hero h1 { font-size: 34px; } .hero p.sub { font-size: 18px; } }
+
+    /* Sections */
+    section { padding: 64px 0; }
+    .section-head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
+    .section-head h2 { font-size: 32px; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 12px; }
+    .section-head p { font-size: 18px; color: var(--body); margin: 0; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+    .card { border: 1px solid var(--line); border-radius: 14px; padding: 24px; background: #fff; }
+    .card .ic { width: 42px; height: 42px; border-radius: 10px; background: var(--soft); color: var(--brand); display: inline-grid; place-items: center; font-size: 22px; margin-bottom: 14px; }
+    .card h3 { font-size: 18px; color: var(--ink); margin: 0 0 8px; }
+    .card p { font-size: 15px; color: var(--body); margin: 0; }
+
+    /* Who it's for */
+    .who { background: var(--soft); }
+    .who .inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .who h2 { font-size: 30px; color: var(--ink); letter-spacing: -0.02em; margin: 0 0 16px; }
+    .who p { font-size: 18px; color: var(--body); margin: 0 0 14px; }
+
+    /* Pricing */
+    .prices { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 760px; margin: 0 auto; }
+    @media (max-width: 620px) { .prices { grid-template-columns: 1fr; } }
+    .price { border: 1px solid var(--line); border-radius: 16px; padding: 28px; background: #fff; }
+    .price.featured { border-color: var(--brand); box-shadow: 0 14px 40px rgba(37,99,235,0.14); position: relative; }
+    .price .tag { position: absolute; top: -12px; left: 28px; background: var(--brand); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.02em; }
+    .price h3 { font-size: 20px; color: var(--ink); margin: 0 0 6px; }
+    .price .amt { font-size: 34px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; margin: 0 0 2px; }
+    .price .amt small { font-size: 16px; font-weight: 600; color: var(--muted); }
+    .price .alt { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+    .price ul { list-style: none; margin: 0; padding: 0; }
+    .price li { position: relative; padding: 6px 0 6px 26px; font-size: 15px; color: var(--body); }
+    .price li::before { content: "✓"; position: absolute; left: 0; color: var(--brand); font-weight: 800; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); padding: 40px 0; color: var(--muted); font-size: 14px; }
+    .foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .foot a { color: var(--body); text-decoration: none; }
+    .foot a:hover { color: var(--ink); }
+    .foot-links { display: flex; gap: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="./">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/>
+            <path d="M16.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M19 6a8 8 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        AloudGuide
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <!-- TODO: replace # with the Chrome Web Store listing URL once published -->
+        <a class="btn btn-primary" href="#get">Add to Chrome</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <h1>Web pages, read aloud — in plain English.</h1>
+        <p class="sub">AloudGuide reads any web page out loud, explains it simply, and warns you when a page looks like a scam. One big friendly button, always in the same place.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#get">Add to Chrome — Free</a>
+          <a class="btn btn-ghost" href="#pricing">See pricing</a>
+        </div>
+        <p class="note">Free to use · No account required · Works on the websites you already visit</p>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>What AloudGuide does</h2>
+          <p>Made for anyone who finds the web hard to read — and for the family members who help them.</p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="ic" aria-hidden="true">🔊</div>
+            <h3>Reads any page aloud</h3>
+            <p>Click one button and AloudGuide reads the page to you in a clear, natural voice.</p>
+          </div>
+          <div class="card">
+            <div class="ic" aria-hidden="true">💬</div>
+            <h3>Explains it simply</h3>
+            <p>Instead of dense text, you hear a short plain-English summary of what the page is actually about.</p>
+          </div>
+          <div class="card">
+            <div class="ic" aria-hidden="true">🛡️</div>
+            <h3>Warns about scams</h3>
+            <p>If a page looks suspicious — a fake login or a too-good-to-be-true offer — AloudGuide reads you a gentle caution.</p>
+          </div>
+          <div class="card">
+            <div class="ic" aria-hidden="true">🎯</div>
+            <h3>One big, easy button</h3>
+            <p>Always in the same corner, large and high-contrast, so it's easy to find every time.</p>
+          </div>
+          <div class="card">
+            <div class="ic" aria-hidden="true">⚙️</div>
+            <h3>Adjust to fit</h3>
+            <p>Make the button bigger, move it where you like, and choose slower, clearer speech.</p>
+          </div>
+          <div class="card">
+            <div class="ic" aria-hidden="true">🔒</div>
+            <h3>Private by design</h3>
+            <p>No passwords or card numbers are ever collected, and scam checks stay on your own device.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="who">
+      <div class="wrap inner">
+        <h2>Made for parents, grandparents, and anyone who wants the web in plain words</h2>
+        <p>The internet wasn't built for everyone. AloudGuide is for older adults, people who find small text and confusing layouts tiring, and anyone who just wants a website explained simply.</p>
+        <p>Setting it up for someone you love? It takes two minutes, and once it's on, it's always one tap away.</p>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Simple pricing</h2>
+          <p>Free to use every day. Upgrade to Premium for clearer explanations and extra detail.</p>
+        </div>
+        <div class="prices">
+          <div class="price">
+            <h3>Free</h3>
+            <p class="amt">$0</p>
+            <p class="alt">Always free</p>
+            <ul>
+              <li>5 reads a day</li>
+              <li>Plain-English page summaries</li>
+              <li>On-device scam warnings</li>
+              <li>Adjustable button size &amp; position</li>
+            </ul>
+          </div>
+          <div class="price featured">
+            <span class="tag">3-DAY FREE TRIAL</span>
+            <h3>Premium</h3>
+            <p class="amt">$4.99 <small>/ month</small></p>
+            <p class="alt">or $39.99 / year — save 33%</p>
+            <ul>
+              <li>5 premium reads a day (clearer, smarter explanations)</li>
+              <li>Unlimited standard reads after that</li>
+              <li>A "Tell me more" button for extra detail</li>
+              <li>Optional slower, clearer speech</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="get" class="who">
+      <div class="wrap inner">
+        <h2>Get AloudGuide</h2>
+        <p>AloudGuide installs as a Chrome extension — no account or sign-up to start.</p>
+        <div class="hero-actions" style="margin-top:8px;">
+          <!-- TODO: replace href with the Chrome Web Store listing URL once published -->
+          <a class="btn btn-primary" href="#get">Add to Chrome — Free</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>&copy; 2026 AloudGuide</div>
+      <div class="foot-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="./privacy.html">Privacy</a>
+        <a href="mailto:aloudguide@gmail.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
